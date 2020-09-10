@@ -4,6 +4,7 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {AuthService} from '../auth/auth.service';
 import {Observable} from 'rxjs';
 import {FindocService} from '../services/findoc.service';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-financedocstable',
@@ -13,8 +14,7 @@ import {FindocService} from '../services/findoc.service';
 export class FinancedocstableComponent implements OnInit {
 
   financeDocs: Financedoc[];
-  itemCollection: AngularFirestoreCollection<Financedoc>;
-
+  displayedColumns: string[] = ['description', 'amount', 'date', 'buttons'];
   constructor(private firestore: AngularFirestore, private authService: AuthService, private findocService: FindocService) {
     // this.financeDocs = this.findocService.getUsers();
 
@@ -40,5 +40,9 @@ export class FinancedocstableComponent implements OnInit {
 
   update(item: Financedoc): void {
 
+  }
+
+  delete(element: Financedoc): void {
+    this.findocService.delete(element);
   }
 }

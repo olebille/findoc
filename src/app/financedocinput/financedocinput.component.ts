@@ -15,11 +15,13 @@ export class FinancedocinputComponent implements OnInit {
   @Input() finDoc: Financedoc;
   description = new FormControl('', Validators.required);
   amount = new FormControl('', Validators.required);
+  date = new FormControl('', Validators.required);
 
   constructor(private theActivatedRoute: ActivatedRoute, fb: FormBuilder, private findocService: FindocService) {
     this.form = fb.group({
       description: this.description,
-      amount: this.amount
+      amount: this.amount,
+      date: this.date
     });
   }
 
@@ -34,7 +36,12 @@ export class FinancedocinputComponent implements OnInit {
     const doc = new Financedoc();
     doc.description = this.description.value;
     doc.amount = this.amount.value;
-    this.findocService.createFinDoc(doc);
+    doc.date = this.date.value;
+    if (this.finDoc) {
+      this.findocService.updateFinDoc(this.finDoc.id, doc);
+    } else {
+      this.findocService.createFinDoc(doc);
+    }
     // console.log(this.form);
   }
 
@@ -45,8 +52,10 @@ export class FinancedocinputComponent implements OnInit {
         if (item.exists) {
           console.log(item.data());
           this.finDoc = item.data();
+          this.finDoc.id = id;
           this.description.setValue(this.finDoc.description);
           this.amount.setValue(this.finDoc.amount);
+          this.date.setValue(this.finDoc.date.toDate());
         }
       });
     }

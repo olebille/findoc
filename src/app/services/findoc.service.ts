@@ -30,9 +30,27 @@ export class FindocService {
     );
   }
 
+  updateFinDoc(id: string, data: Financedoc): Promise<void> {
+    return new Promise<any>((resolve, reject) => {
+        console.log('starting to save' + this.authService.getUserId());
+        this.firestore.collection('users').doc(this.authService.getUserId())
+          .collection('findocs').doc(id).set(data.toJson())
+          .then(
+            res => {
+              console.log(res);
+            },
+            err => {
+              console.log(err);
+            }
+          );
+      }
+    );
+  }
+
   getUsers(): Observable<any> {
 
-    return this.firestore.collection('/users/' + this.authService.getUserId() + '/findocs').snapshotChanges();
+    const angularFirestoreCollection = this.firestore.collection('/users/' + this.authService.getUserId() + '/findocs', ref => ref.orderBy('date'));
+    return angularFirestoreCollection.snapshotChanges();
     // return this.firestore.collection('/users/' + this.authService.getUserId() + '/findocs').snapshotChanges().toPromise();
     // return new Promise<any>((resolve, reject) => {
     //   this.firestore.collection('/users/' + this.authService.getUserId() + '/findocs').snapshotChanges()
@@ -49,5 +67,11 @@ export class FindocService {
     return this.firestore.collection('/users/').doc(userId).collection('/findocs/').doc(id).get().toPromise();
     // return this.firestore.doc('/users/' + this.authService.getUserId() + '/findocs/' + id).get().toPromise();
 
+  }
+
+  delete(element: Financedoc): void {
+    const userId = this.authService.getUserId();
+
+    this.firestore.collection('/users/').doc(userId).collection('/findocs/').doc(element.id).delete();
   }
 }

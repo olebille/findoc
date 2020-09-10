@@ -15,6 +15,14 @@ import {FindocService} from './services/findoc.service';
 import { FinancedocstableComponent } from './financedocstable/financedocstable.component';
 import { FinancedocinputComponent } from './financedocinput/financedocinput.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatIconModule} from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,9 +37,17 @@ import {ReactiveFormsModule} from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatIconModule
   ],
-  providers: [AuthService, AuthGuardService, FindocService],
+  providers: [AuthService, AuthGuardService, FindocService, MatDatepickerModule, {provide: MAT_DATE_LOCALE, useValue: 'da-DK'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
