@@ -1,0 +1,4 @@
+<p>financedocstable works!</p>
+<p *ngFor="let item of financeDocs">
+  {{ item.description }} is {{ item.amount }} <button (click)="update(item)">Update</button> <a routerLink="/findocdetail/{{item.id}}">detail</a>
+</p>

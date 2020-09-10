@@ -1,0 +1,17 @@
+<p>financedocinput works!</p>
+<section class="sample-app-content">
+  <h1>Model-based Form Example:</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmitModelBased()">
+    <p>
+      <label>Description:</label>
+      <input type="text" formControlName="description">
+    </p>
+    <p>
+      <label>Amount:</label>
+      <input type="text" formControlName="amount">
+    </p>
+    <p>
+      <button type="submit" [disabled]="!form.valid">Submit</button>
+    </p>
+  </form>
+</section>
